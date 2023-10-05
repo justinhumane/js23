@@ -1,5 +1,5 @@
 <template>
-  <div class="view-body">
+  <div class="max-w-screen-lg mx-auto">
     <NavigationComp />
     <div class="home-text">
       <h1>Website about epic dragons</h1>
@@ -29,9 +29,75 @@
         parturient montes, nascetur ridiculus mus.
       </p>
 
-      <router-link to="/dragons">
-        <button class="button">Show me</button>
-      </router-link>
+      <p>
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer
+        malesuada. Etiam dui sem, fermentum vitae, sagittis id, malesuada in,
+        quam. Itaque earum rerum hic tenetur a sapiente delectus, ut aut
+        reiciendis voluptatibus maiores alias consequatur aut perferendis
+        doloribus asperiores repellat. Nullam lectus justo, vulputate eget
+        mollis sed, tempor sed magna. Fusce aliquam vestibulum ipsum. Aliquam id
+        dolor. Nullam dapibus fermentum ipsum. Mauris metus. Fusce aliquam
+        vestibulum ipsum. Aenean id metus id velit ullamcorper pulvinar. Etiam
+        neque. Maecenas sollicitudin. Curabitur sagittis hendrerit ante. In enim
+        a arcu imperdiet malesuada. Cum sociis natoque penatibus et magnis dis
+        parturient montes, nascetur ridiculus mus.
+      </p>
+
+      <p>
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer
+        malesuada. Etiam dui sem, fermentum vitae, sagittis id, malesuada in,
+        quam. Itaque earum rerum hic tenetur a sapiente delectus, ut aut
+        reiciendis voluptatibus maiores alias consequatur aut perferendis
+        doloribus asperiores repellat. Nullam lectus justo, vulputate eget
+        mollis sed, tempor sed magna. Fusce aliquam vestibulum ipsum. Aliquam id
+        dolor. Nullam dapibus fermentum ipsum. Mauris metus. Fusce aliquam
+        vestibulum ipsum. Aenean id metus id velit ullamcorper pulvinar. Etiam
+        neque. Maecenas sollicitudin. Curabitur sagittis hendrerit ante. In enim
+        a arcu imperdiet malesuada. Cum sociis natoque penatibus et magnis dis
+        parturient montes, nascetur ridiculus mus.
+      </p>
+
+      <p>
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer
+        malesuada. Etiam dui sem, fermentum vitae, sagittis id, malesuada in,
+        quam. Itaque earum rerum hic tenetur a sapiente delectus, ut aut
+        reiciendis voluptatibus maiores alias consequatur aut perferendis
+        doloribus asperiores repellat. Nullam lectus justo, vulputate eget
+        mollis sed, tempor sed magna. Fusce aliquam vestibulum ipsum. Aliquam id
+        dolor. Nullam dapibus fermentum ipsum. Mauris metus. Fusce aliquam
+        vestibulum ipsum. Aenean id metus id velit ullamcorper pulvinar. Etiam
+        neque. Maecenas sollicitudin. Curabitur sagittis hendrerit ante. In enim
+        a arcu imperdiet malesuada. Cum sociis natoque penatibus et magnis dis
+        parturient montes, nascetur ridiculus mus.
+      </p>
+
+      <p>
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer
+        malesuada. Etiam dui sem, fermentum vitae, sagittis id, malesuada in,
+        quam. Itaque earum rerum hic tenetur a sapiente delectus, ut aut
+        reiciendis voluptatibus maiores alias consequatur aut perferendis
+        doloribus asperiores repellat. Nullam lectus justo, vulputate eget
+        mollis sed, tempor sed magna. Fusce aliquam vestibulum ipsum. Aliquam id
+        dolor. Nullam dapibus fermentum ipsum. Mauris metus. Fusce aliquam
+        vestibulum ipsum. Aenean id metus id velit ullamcorper pulvinar. Etiam
+        neque. Maecenas sollicitudin. Curabitur sagittis hendrerit ante. In enim
+        a arcu imperdiet malesuada. Cum sociis natoque penatibus et magnis dis
+        parturient montes, nascetur ridiculus mus.
+      </p>
+
+      <p>
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer
+        malesuada. Etiam dui sem, fermentum vitae, sagittis id, malesuada in,
+        quam. Itaque earum rerum hic tenetur a sapiente delectus, ut aut
+        reiciendis voluptatibus maiores alias consequatur aut perferendis
+        doloribus asperiores repellat. Nullam lectus justo, vulputate eget
+        mollis sed, tempor sed magna. Fusce aliquam vestibulum ipsum. Aliquam id
+        dolor. Nullam dapibus fermentum ipsum. Mauris metus. Fusce aliquam
+        vestibulum ipsum. Aenean id metus id velit ullamcorper pulvinar. Etiam
+        neque. Maecenas sollicitudin. Curabitur sagittis hendrerit ante. In enim
+        a arcu imperdiet malesuada. Cum sociis natoque penatibus et magnis dis
+        parturient montes, nascetur ridiculus mus.
+      </p>
     </div>
   </div>
 </template>

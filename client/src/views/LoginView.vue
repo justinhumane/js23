@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full flex flex-col items-center justify-center">
+  <div class="w-full h-screen flex flex-col items-center justify-center">
     <h1 class="text-6xl mb-6 text-slate-700 dark:text-slate-200">JS23</h1>
     <div class="rounded">
       <div class="rounded-t bg-slate-400 dark:bg-slate-800">

@@ -1,8 +1,8 @@
 <template>
   <div
-    class="h-screen bg-slate-300 dark:bg-slate-900 text-slate-700 dark:text-slate-200"
+    class="min-h-screen bg-slate-300 dark:bg-slate-900 text-slate-700 dark:text-slate-200"
   >
-    <router-view />
+    <router-view class="py-4" />
   </div>
 </template>
 
