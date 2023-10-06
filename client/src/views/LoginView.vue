@@ -1,8 +1,10 @@
 <template>
   <div class="w-full h-screen flex flex-col items-center justify-center">
-    <h1 class="text-6xl mb-6 text-slate-700 dark:text-slate-200">JS23</h1>
+    <h1 class="text-6xl mb-6 font-bold text-sky-700 dark:text-amber-300">
+      JS23
+    </h1>
     <div class="rounded">
-      <div class="rounded-t bg-slate-400 dark:bg-slate-800">
+      <div class="rounded-t bg-slate-400 font-bold dark:bg-slate-800">
         <button
           @click="
             loginActive = true;
@@ -36,7 +38,7 @@
         class="p-10 rounded-b bg-slate-100 dark:bg-slate-700"
       >
         <form @submit.prevent="login()" class="flex flex-col">
-          <label for="email" class="text-sm">Email</label>
+          <label for="email" class="text-sm font-bold">Email</label>
           <input
             class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
             type="email"
@@ -45,7 +47,7 @@
             placeholder="anders@svensson.se"
             required
           />
-          <label for="password" class="text-sm">Password</label>
+          <label for="password" class="text-sm font-bold">Password</label>
           <input
             class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
             type="password"
@@ -56,7 +58,7 @@
           />
 
           <button
-            class="transition duration-300 p-2 rounded bg-slate-300 hover:bg-slate-400 text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-900 dark:text-slate-200"
+            class="transition duration-300 font-bold p-2 rounded bg-amber-300 hover:bg-amber-400 text-slate-700 dark:bg-sky-700 dark:hover:bg-sky-500 dark:text-slate-200"
           >
             Login
           </button>
@@ -67,7 +69,7 @@
         class="p-10 rounded-b bg-slate-100 dark:bg-slate-700"
       >
         <form @submit.prevent="register" class="flex flex-col">
-          <label for="username" class="text-sm">Username</label>
+          <label for="username" class="text-sm font-bold">Username</label>
           <input
             class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
             type="text"
@@ -76,7 +78,7 @@
             placeholder="anderssvensson"
             required
           />
-          <label for="email" class="text-sm">Email</label>
+          <label for="email" class="text-sm font-bold">Email</label>
           <input
             class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
             type="email"
@@ -85,7 +87,7 @@
             placeholder="anders@svensson.se"
             required
           />
-          <label for="password" class="text-sm">Password</label>
+          <label for="password" class="text-sm font-bold">Password</label>
           <input
             class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
             type="password"
@@ -96,7 +98,7 @@
           />
 
           <button
-            class="transition duration-300 p-2 rounded bg-slate-300 hover:bg-slate-400 text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-900 dark:text-slate-200"
+            class="transition duration-300 font-bold p-2 rounded bg-amber-300 hover:bg-amber-400 text-slate-700 dark:bg-sky-700 dark:hover:bg-sky-500 dark:text-slate-200"
           >
             Register
           </button>
@@ -172,5 +174,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

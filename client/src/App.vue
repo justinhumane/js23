@@ -16,13 +16,13 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Bree+Serif&family=Fira+Sans:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&family=Montserrat:wght@400;600;700;900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 #app {
-  font-family: "Fira Sans", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 h1,
@@ -30,6 +30,6 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: "Bree Serif", serif;
+  font-family: "Arvo", serif;
 }
 </style>

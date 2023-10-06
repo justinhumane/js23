@@ -1,36 +1,30 @@
 <template>
   <nav
-    class="bg-slate-800 flex justify-between items-center rounded sticky px-5 py-3 mb-5"
+    class="bg-slate-100 dark:bg-slate-800 flex justify-between items-center rounded sticky px-5 py-3 mb-5"
   >
     <router-link to="/">
-      <div class="text-2xl text-slate-200 font-bold">JS23</div>
+      <div class="text-2xl font-bold">JS23</div>
     </router-link>
     <div class="flex gap-4">
       <router-link
-        class="transition duration-300 dark:hover:text-amber-300"
+        class="transition duration-300 hover:text-sky-700 dark:hover:text-amber-300"
         to="/"
         >Hem</router-link
       >
       <router-link
-        class="transition duration-300 dark:hover:text-amber-300"
+        class="transition duration-300 hover:text-sky-700 dark:hover:text-amber-300"
         to="/asd"
         >Hem</router-link
       >
       <router-link
-        class="transition duration-300 dark:hover:text-amber-300"
+        class="transition duration-300 hover:text-sky-700 dark:hover:text-amber-300"
         to="/asd"
         >Hem</router-link
       >
     </div>
-    <!--     <div class="flex gap-4" v-if="user">
-      <router-link to="/user">
-        <div class="login">{{ user.username }}</div>
-      </router-link>
-      <a @click="logout" class="cursor-pointer">Log out</a>
-    </div> -->
     <div class="relative">
       <button
-        class="py-2 px-4 bg-amber-700 rounded flex items-center gap-2 cursor-pointer"
+        class="py-2 px-4 bg-amber-300 hover:bg-amber-400 dark:bg-sky-700 dark:hover:bg-sky-900 transition duration-300 rounded flex items-center gap-2 cursor-pointer"
         @click="menuOpen = !menuOpen"
       >
         <svg
@@ -48,12 +42,21 @@
       </button>
       <div
         :class="{ 'max-h-52': menuOpen }"
-        class="bg-amber-700 rounded-b max-h-0 rounded-tl right-0 mt-2 transition-[max-height] duration-300 ease-in-out transform absolute overflow-hidden"
+        class="bg-amber-300 dark:bg-sky-700 rounded max-h-0 right-0 mt-2 transition-[max-height] duration-300 ease-in-out transform absolute overflow-hidden"
       >
-        <ul>
-          <li class="my-1 px-3 py-1">Inställningar</li>
-          <li class="my-1 px-3 py-1">Logga ut</li>
-        </ul>
+        <div>
+          <router-link
+            to="/user"
+            class="mt-2 px-3 block py-2 transition duration-300 hover:bg-amber-400 dark:hover:bg-sky-900"
+          >
+            Inställningar
+          </router-link>
+          <a
+            @click="logout"
+            class="cursor-pointer block mb-2 px-3 py-2 transition duration-300 hover:bg-amber-400 dark:hover:bg-sky-900"
+            >Logga ut</a
+          >
+        </div>
       </div>
     </div>
   </nav>
@@ -96,7 +99,10 @@ export default {
 </script>
 
 <style scoped>
+nav {
+  @apply font-bold;
+}
 .router-link-active {
-  @apply dark:text-amber-300;
+  @apply text-sky-700 dark:text-amber-300;
 }
 </style>
