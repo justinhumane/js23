@@ -8,18 +8,13 @@
     <div class="flex gap-4">
       <router-link
         class="transition duration-300 hover:text-sky-700 dark:hover:text-amber-300"
-        to="/"
-        >Hem</router-link
+        to="/asd"
+        >Lektioner</router-link
       >
       <router-link
         class="transition duration-300 hover:text-sky-700 dark:hover:text-amber-300"
         to="/asd"
-        >Hem</router-link
-      >
-      <router-link
-        class="transition duration-300 hover:text-sky-700 dark:hover:text-amber-300"
-        to="/asd"
-        >Hem</router-link
+        >Klassrådsprotokoll</router-link
       >
     </div>
     <div class="relative">
