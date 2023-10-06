@@ -69,7 +69,10 @@ router.post("/logout", (req, res) => {
 router.get("/", requireLogin, (req, res) => {
   const token = req.cookies.auth;
   const _id = jwt.verify(token, SECRET).payload;
-  User.findOne({ _id }, { username: 1, email: 1, registrationDate: 1 })
+  User.findOne(
+    { _id },
+    { username: 1, email: 1, registrationDate: 1, level: 1 }
+  )
     .then((user) => {
       return res.status(200).json({ message: "success", data: user });
     })

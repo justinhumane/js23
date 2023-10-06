@@ -4,6 +4,7 @@ import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import store from "../services/store";
 import UserView from "../views/UserView.vue";
+import NewPostView from "../views/NewPostView.vue";
 
 const routes = [
   {
@@ -42,6 +43,16 @@ const routes = [
     component: UserView,
     meta: {
       title: "User profile",
+      authRequired: true,
+      authForbidden: false,
+    },
+  },
+  {
+    path: "/post/new",
+    name: "newPost",
+    component: NewPostView,
+    meta: {
+      title: "Create New Post",
       authRequired: true,
       authForbidden: false,
     },

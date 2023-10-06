@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const TodoListRoutes = require("./routes/api/Todolist");
 const UserRoutes = require("./routes/api/User");
+const postRoutes = require("./routes/api/Post");
 
 const { Router } = require("express");
 const router = Router();
@@ -37,6 +38,7 @@ const path = require("path");
 app.use("/api", apiRoutes); */
 /* app.use("/api/TodoList", TodoListRoutes); */
 app.use("/api/users", UserRoutes);
+app.use("/api/post", postRoutes);
 
 app.listen(process.env.PORT, () =>
   console.log(`App listening at http://localhost:${process.env.PORT}`)
