@@ -12,11 +12,11 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("post/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const postId = req.params.id;
-  const post = await Post.findById(postId);
 
   try {
+    const post = await Post.findById(postId);
     if (!post) throw new Error("No post found!");
     res.status(200).json(post);
   } catch (error) {
@@ -25,12 +25,14 @@ router.get("post/:id", async (req, res) => {
 });
 
 router.post("/new/", async (req, res) => {
-  const { title, category, tags, content } = req.body;
+  const { title, postType, content, category, tags, links } = req.body;
   const newPost = new Post({
     title,
+    postType,
+    content,
     category,
     tags,
-    content,
+    links,
   });
   try {
     const post = await newPost.save();
@@ -42,13 +44,15 @@ router.post("/new/", async (req, res) => {
 });
 
 router.put("/edit/:id", async (req, res) => {
-  const { title, category, tags, content } = req.body;
+  const { title, postType, content, category, tags, links } = req.body;
   try {
     const post = await Post.findByIdAndUpdate(req.params.id, {
       title,
+      postType,
+      content,
       category,
       tags,
-      content,
+      links,
     });
     if (!post) throw new Error("Something went wrong updating the post!");
     res.status(200).json(post);

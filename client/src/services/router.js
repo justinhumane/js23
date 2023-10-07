@@ -5,6 +5,7 @@ import RegisterView from "../views/RegisterView.vue";
 import store from "../services/store";
 import UserView from "../views/UserView.vue";
 import NewPostView from "../views/NewPostView.vue";
+import EditPostView from "../views/EditPostView.vue";
 
 const routes = [
   {
@@ -53,6 +54,16 @@ const routes = [
     component: NewPostView,
     meta: {
       title: "Create New Post",
+      authRequired: true,
+      authForbidden: false,
+    },
+  },
+  {
+    path: "/post/edit/:id",
+    name: "editPost",
+    component: EditPostView,
+    meta: {
+      title: "Edit Post",
       authRequired: true,
       authForbidden: false,
     },

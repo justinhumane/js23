@@ -5,12 +5,24 @@ const PostSchema = new Schema({
     type: String,
     required: true,
   },
+  postType: {
+    type: String,
+    required: true,
+  },
   category: {
     type: String,
     required: true,
   },
   tags: {
     type: Array,
+  },
+  links: {
+    type: [
+      {
+        title: "String",
+        url: "String",
+      },
+    ],
   },
   content: {
     type: String,

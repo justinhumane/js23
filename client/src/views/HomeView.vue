@@ -2,6 +2,18 @@
   <div class="max-w-screen-md mx-auto">
     <NavigationComp />
     <div>
+      <PostComp
+        v-for="post in posts"
+        :key="post._id"
+        :id="post._id"
+        :title="post.title"
+        :type="post.type"
+        :category="post.category"
+        :tags="post.tags"
+        :content="post.content"
+        :links="post.links"
+        :createdAt="post.createdAt"
+      />
       <div class="p-5 rounded my-10 bg-slate-100 dark:bg-slate-800">
         <time datetime="2023-10-06 12:00" class="font-mono"
           >2023-10-06 12:00</time
@@ -79,16 +91,6 @@
           </svg>
           Mozilla om Grid
         </a>
-      </div>
-
-      <div v-for="post in posts" :key="post._id">
-        <PostComp
-          :title="post.title"
-          :content="post.content"
-          :category="post.category"
-          :tags="post.tags"
-          :createdAt="post.createdAt"
-        />
       </div>
     </div>
   </div>

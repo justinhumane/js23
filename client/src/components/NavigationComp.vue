@@ -3,7 +3,7 @@
     class="bg-slate-100 dark:bg-slate-800 flex justify-between items-center rounded sticky px-5 py-3 mb-5"
   >
     <router-link to="/">
-      <h1>JS23</h1>
+      <h1 class="text-amber-300">JS23</h1>
     </router-link>
     <div class="flex gap-4">
       <router-link
@@ -30,8 +30,9 @@
           <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
           <path
             d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
-          /></svg
-      ></a>
+          />
+        </svg>
+      </a>
     </div>
     <div class="relative">
       <button
@@ -48,8 +49,9 @@
         >
           <path
             d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
-          /></svg
-        >{{ user.username }}
+          />
+        </svg>
+        {{ user.username }}
       </button>
       <div
         :class="{ 'max-h-52': menuOpen }"

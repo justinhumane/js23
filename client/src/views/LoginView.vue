@@ -16,7 +16,7 @@
           }"
           class="w-2/4 p-3 rounded-t"
         >
-          Log in
+          Logga in
         </button>
         <button
           @click="
@@ -30,79 +30,78 @@
           }"
           class="w-2/4 p-3 rounded-t"
         >
-          Register
+          Registera
         </button>
       </div>
       <div
         :class="{ hidden: !loginActive, visible: loginActive }"
         class="p-10 rounded-b bg-slate-100 dark:bg-slate-700"
       >
-        <form @submit.prevent="login()" class="flex flex-col">
-          <label for="email" class="text-sm font-bold">Email</label>
-          <input
-            class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
-            type="email"
-            v-model="email"
-            id="email"
+        <FormKit
+          type="form"
+          submit-label="Logga in"
+          :submit-attrs="{
+            inputClass:
+              'transition w-full duration-300 font-bold p-2 rounded bg-amber-300 hover:bg-amber-400 text-slate-700 dark:bg-sky-700 dark:hover:bg-sky-500 dark:text-slate-200',
+          }"
+          @submit="login()"
+        >
+          <FormKit
+            type="text"
+            label="Email"
             placeholder="anders@svensson.se"
-            required
+            label-class="text-sm font-bold"
+            input-class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
+            v-model="loginEmail"
           />
-          <label for="password" class="text-sm font-bold">Password</label>
-          <input
-            class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
+          <FormKit
             type="password"
-            v-model="password"
-            id="password"
-            placeholder="*********"
-            required
+            label="Lösenord"
+            placeholder="**********"
+            label-class="text-sm font-bold"
+            input-class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
+            v-model="loginPassword"
           />
-
-          <button
-            class="transition duration-300 font-bold p-2 rounded bg-amber-300 hover:bg-amber-400 text-slate-700 dark:bg-sky-700 dark:hover:bg-sky-500 dark:text-slate-200"
-          >
-            Login
-          </button>
-        </form>
+        </FormKit>
       </div>
       <div
         :class="{ hidden: !registerActive, visible: registerActive }"
         class="p-10 rounded-b bg-slate-100 dark:bg-slate-700"
       >
-        <form @submit.prevent="register" class="flex flex-col">
-          <label for="username" class="text-sm font-bold">Username</label>
-          <input
-            class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
+        <FormKit
+          type="form"
+          submit-label="Registrera"
+          :submit-attrs="{
+            inputClass:
+              'transition w-full duration-300 font-bold p-2 rounded bg-amber-300 hover:bg-amber-400 text-slate-700 dark:bg-sky-700 dark:hover:bg-sky-500 dark:text-slate-200',
+          }"
+          @submit="register()"
+        >
+          <FormKit
             type="text"
-            v-model="username"
-            id="username"
+            label="Användarnamn"
             placeholder="anderssvensson"
-            required
+            label-class="text-sm font-bold"
+            input-class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
+            v-model="registerUsername"
           />
-          <label for="email" class="text-sm font-bold">Email</label>
-          <input
-            class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
-            type="email"
-            v-model="email"
-            id="email"
+          <FormKit
+            type="text"
+            label="Email"
             placeholder="anders@svensson.se"
-            required
+            label-class="text-sm font-bold"
+            input-class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
+            v-model="registerEmail"
           />
-          <label for="password" class="text-sm font-bold">Password</label>
-          <input
-            class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
+          <FormKit
             type="password"
-            v-model="password"
-            id="password"
-            placeholder="*********"
-            required
+            label="Lösenord"
+            placeholder="**********"
+            label-class="text-sm font-bold"
+            input-class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
+            v-model="registerPassword"
           />
-
-          <button
-            class="transition duration-300 font-bold p-2 rounded bg-amber-300 hover:bg-amber-400 text-slate-700 dark:bg-sky-700 dark:hover:bg-sky-500 dark:text-slate-200"
-          >
-            Register
-          </button>
-        </form>
+        </FormKit>
       </div>
     </div>
   </div>
@@ -115,9 +114,11 @@ export default {
   name: "LoginView",
   data() {
     return {
-      username: "",
-      email: "",
-      password: "",
+      loginEmail: "",
+      loginPassword: "",
+      registerUsername: "",
+      registerEmail: "",
+      registerPassword: "",
       loginActive: true,
       registerActive: false,
     };
@@ -131,8 +132,8 @@ export default {
     async login() {
       try {
         await this.$store.dispatch("login", {
-          email: this.email,
-          password: this.password,
+          email: this.loginEmail,
+          password: this.loginPassword,
         });
         if (this.isUserLoggedIn) {
           this.$toast.success("Authentication succeeded.", {
@@ -151,9 +152,9 @@ export default {
     },
     register() {
       Api.post("/users/register", {
-        username: this.username,
-        email: this.email,
-        password: this.password,
+        username: this.registerUsername,
+        email: this.registerEmail,
+        password: this.registerPassword,
       })
         .then(() => {
           this.$toast.success("Registration succeeded!", {
