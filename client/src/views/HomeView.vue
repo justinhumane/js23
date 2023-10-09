@@ -7,7 +7,7 @@
         :key="post._id"
         :id="post._id"
         :title="post.title"
-        :type="post.type"
+        :type="post.postType"
         :category="post.category"
         :tags="post.tags"
         :content="post.content"
@@ -96,23 +96,18 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from "vue";
 import axios from "axios";
 import NavigationComp from "../components/NavigationComp.vue";
 import PostComp from "../components/PostComp.vue";
-export default {
-  name: "HomeView",
-  components: { NavigationComp, PostComp },
-  data() {
-    return {
-      posts: [],
-    };
-  },
-  async mounted() {
-    const response = await axios.get("/api/post");
-    this.posts = response.data;
-  },
-};
+
+const posts = ref([]);
+
+onMounted(async () => {
+  const response = await axios.get("/api/post");
+  posts.value = response.data;
+});
 </script>
 
 <style scoped></style>

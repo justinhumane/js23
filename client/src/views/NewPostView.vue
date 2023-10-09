@@ -60,7 +60,7 @@
             />
             <label class="text-sm font-bold">Taggar</label>
             <vue3-tags-input
-              :tags="tags"
+              :tags="newTags"
               id="tags"
               @on-tags-changed="handleChangeTag"
             />
@@ -110,22 +110,6 @@
               <div class="col-span-2 flex items-center">
                 {{ link.url }}
               </div>
-              <!-- <FormKit
-                type="text"
-                :value="link.title"
-                placeholder=""
-                outer-class="col-span-2"
-                label-class="text-sm font-bold"
-                input-class="p-2 w-full rounded bg-slate-300 dark:bg-slate-500"
-              />
-              <FormKit
-                type="text"
-                :value="link.url"
-                placeholder=""
-                outer-class="col-span-2"
-                label-class="text-sm font-bold"
-                input-class="p-2 w-full rounded bg-slate-300 dark:bg-slate-500"
-              /> -->
               <div class="flex flex-col justify-end">
                 <button
                   @click="removeLink(index)"
@@ -141,66 +125,64 @@
     </div>
   </div>
 </template>
-<script>
+
+<script setup>
 import Api from "../services/api";
 import NavigationComp from "../components/NavigationComp.vue";
 import Vue3TagsInput from "vue3-tags-input";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useToast } from "vue-toast-notification";
 
-export default {
-  name: "NewPostView",
-  components: {
-    NavigationComp,
-    Vue3TagsInput,
-  },
-  data() {
-    return {
-      title: "",
-      postType: "",
-      content: "",
-      category: "",
-      tags: [],
-      links: [],
-      postLink: "",
-      postUrl: "",
-    };
-  },
-  methods: {
-    save() {
-      Api.post("/post/new", {
-        title: this.title,
-        postType: this.postType,
-        content: this.content,
-        category: this.category,
-        tags: this.tags,
-        links: this.links,
-      })
-        .then(() => {
-          this.$toast.success("Registration succeeded!", {
-            position: "bottom-left",
-            duration: 1000,
-          });
-          this.$router.push("/");
-        })
-        .catch((err) => {
-          console.log(err);
-          this.$toast.error("Registration failed!", {
-            position: "bottom-left",
-            duration: 1000,
-          });
-        });
-    },
-    handleChangeTag(tags) {
-      this.tags = tags;
-    },
-    pushLink() {
-      this.links.push({ title: this.postLink, url: this.postUrl });
-      this.postLink = "";
-      this.postUrl = "";
-    },
-    removeLink(index) {
-      this.links.splice(index, 1);
-    },
-  },
+const router = useRouter();
+const toast = useToast();
+
+const title = ref("");
+const postType = ref("");
+const content = ref("");
+const category = ref("");
+const tags = ref([]);
+const links = ref([]);
+const postLink = ref("");
+const postUrl = ref("");
+const newTags = ref([]);
+
+const handleChangeTag = (newTags) => {
+  tags.value = newTags;
+};
+
+const pushLink = () => {
+  links.value.push({ title: postLink.value, url: postUrl.value });
+  postLink.value = "";
+  postUrl.value = "";
+};
+
+const removeLink = (index) => {
+  links.value.splice(index, 1);
+};
+
+const save = async () => {
+  try {
+    await Api.post("/post/new", {
+      title: title.value,
+      postType: postType.value,
+      content: content.value,
+      category: category.value,
+      tags: tags.value,
+      links: links.value,
+    });
+    toast.success("Registration succeeded!", {
+      position: "bottom-left",
+      duration: 1000,
+    });
+    router.push("/");
+  } catch (err) {
+    console.error(err);
+    toast.error("Registration failed!", {
+      position: "bottom-left",
+      duration: 1000,
+    });
+  }
 };
 </script>
 

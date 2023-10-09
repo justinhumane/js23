@@ -4,7 +4,16 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const posts = await Post.find().sort({ createdAt: "desc" });
+    const query = Post.find().sort({ createdAt: "desc" });
+
+    if (req.query.type) {
+      query.where({ postType: req.query.type });
+    }
+    if (req.query.category) {
+      query.where({ category: req.query.category });
+    }
+
+    const posts = await query;
     if (!posts) throw new Error("No posts found!");
     res.status(200).json(posts);
   } catch (error) {

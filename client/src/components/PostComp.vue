@@ -1,20 +1,16 @@
 <template>
-  <div class="p-5 rounded my-10 bg-slate-100 dark:bg-slate-800 relative">
-    <div v-if="user.level === 0" class="absolute top-5 right-5">
-      <router-link
-        class="text-sm font-semibold transition duration-300 py-1 px-2 rounded-l dark:bg-emerald-700 dark:hover:bg-emerald-900"
-        :to="`/post/edit/${id}`"
-        >Editera</router-link
-      >
-      <router-link
-        class="text-sm font-semibold transition duration-300 py-1 px-2 rounded-r dark:bg-red-600 dark:hover:bg-red-900"
-        to="/post/delete"
-        >Ta bort</router-link
-      >
+  <div class="p-5 rounded my-10 bg-slate-100 dark:bg-slate-800">
+    <div class="flex justify-between">
+      <p class="mb-0 font-mono">{{ type }}</p>
+      <time datetime="2023-10-06 12:00" class="font-mono">{{
+        newCreated
+      }}</time>
     </div>
-    <time datetime="2023-10-06 12:00" class="font-mono">{{ newCreated }}</time>
     <h1>{{ title }}</h1>
-    <div class="flex items-center font-bold mt-2 mb-4">
+    <div
+      v-if="type === 'Lektion'"
+      class="flex items-center font-bold mt-2 mb-4"
+    >
       Kurs
       <router-link
         to="/asd"
@@ -23,7 +19,10 @@
       >
     </div>
 
-    <div v-if="tags.length > 0" class="flex items-center font-bold my-4">
+    <div
+      v-if="tags.length > 0 && type === 'Lektion'"
+      class="flex items-center font-bold my-4"
+    >
       Taggar
       <router-link
         v-for="tag in tags"
@@ -33,9 +32,7 @@
         >{{ tag }}</router-link
       >
     </div>
-    <p>
-      {{ content }}
-    </p>
+    <div class="mb-2 content" v-html="content"></div>
     <div v-if="links.length > 0">
       <h3 class="mb-1">Nyttiga länkar</h3>
       <a
@@ -72,11 +69,47 @@
         </svg>
       </a>
     </div>
+    <div v-if="user.level === 0" class="mt-4">
+      <router-link :to="`/post/edit/${id}`" v-slot="{ href, navigate }">
+        <button
+          :href="href"
+          @click="navigate"
+          class="text-sm font-semibold transition duration-300 py-1 px-2 rounded-l dark:bg-emerald-700 dark:hover:bg-emerald-900"
+        >
+          Editera
+        </button></router-link
+      >
+      <button
+        @click="deletePost"
+        class="text-sm font-semibold transition duration-300 py-1 px-2 rounded-r dark:bg-red-600 dark:hover:bg-red-900"
+      >
+        Ta bort
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
+import Api from "../services/api";
 import dayjs from "dayjs";
+
+/* defineProps({
+  id: String,
+  title: String,
+  type: String,
+  category: String,
+  tags: Array,
+  content: String,
+  links: Array,
+  createdAt: String,
+});
+
+const deletePost = () => {
+  Api.delete("/post/" + this.id);
+};
+
+const user = this.store.state.user; */
+
 export default {
   name: "PostComp",
   props: {
@@ -88,6 +121,11 @@ export default {
     content: String,
     links: Array,
     createdAt: String,
+  },
+  methods: {
+    deletePost() {
+      Api.delete("/post/" + this.id);
+    },
   },
   computed: {
     newCreated() {

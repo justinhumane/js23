@@ -6,6 +6,8 @@ import store from "../services/store";
 import UserView from "../views/UserView.vue";
 import NewPostView from "../views/NewPostView.vue";
 import EditPostView from "../views/EditPostView.vue";
+import ClassesView from "../views/ClassesView.vue";
+import ProtocolView from "../views/ProtocolView.vue";
 
 const routes = [
   {
@@ -14,6 +16,26 @@ const routes = [
     component: HomeView,
     meta: {
       title: "JS23",
+      authRequired: true,
+      authForbidden: false,
+    },
+  },
+  {
+    path: "/lektioner",
+    name: "lektioner",
+    component: ClassesView,
+    meta: {
+      title: "JS23 - lektioner",
+      authRequired: true,
+      authForbidden: false,
+    },
+  },
+  {
+    path: "/klassradsprotokoll",
+    name: "klassradsprotokoll",
+    component: ProtocolView,
+    meta: {
+      title: "JS23 - klassrådsprotokoll",
       authRequired: true,
       authForbidden: false,
     },

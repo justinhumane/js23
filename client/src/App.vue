@@ -6,13 +6,8 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import NavigationComp from "./components/NavigationComp.vue";
-
-export default {
-  name: "JS23",
-  components: { NavigationComp },
-};
 </script>
 
 <style>
@@ -52,5 +47,9 @@ h4 {
 
 p {
   @apply mb-4;
+}
+
+.content ul {
+  @apply list-disc pl-10;
 }
 </style>

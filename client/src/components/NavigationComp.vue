@@ -8,12 +8,12 @@
     <div class="flex gap-4">
       <router-link
         class="transition duration-300 hover:text-sky-700 dark:hover:text-amber-300"
-        to="/asd"
+        to="/lektioner"
         >Lektioner</router-link
       >
       <router-link
         class="transition duration-300 hover:text-sky-700 dark:hover:text-amber-300"
-        to="/asd"
+        to="/klassradsprotokoll"
         >Klassrådsprotokoll</router-link
       >
       <a

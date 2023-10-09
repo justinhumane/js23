@@ -107,10 +107,74 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import Api from "../services/api";
+import { ref, computed, inject } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+import { useToast } from "vue-toast-notification";
 
-export default {
+const store = useStore();
+const router = useRouter();
+const toast = useToast();
+
+const loginEmail = ref("");
+const loginPassword = ref("");
+const registerUsername = ref("");
+const registerEmail = ref("");
+const registerPassword = ref("");
+const loginActive = ref(true);
+const registerActive = ref(false);
+
+const isUserLoggedIn = computed(() => {
+  return store.state.userLoggedIn;
+});
+
+const login = async () => {
+  try {
+    await store.dispatch("login", {
+      email: loginEmail.value,
+      password: loginPassword.value,
+    });
+    if (isUserLoggedIn.value) {
+      toast.success("Authentication succeeded.", {
+        position: "bottom-left",
+        duration: 10000,
+      });
+      await router.push("/");
+    }
+  } catch (err) {
+    console.log(err);
+    toast.error(`Authentication failed! Error: ${err}`, {
+      position: "bottom-left",
+      duration: 1000,
+    });
+  }
+};
+
+const register = () => {
+  Api.post("/users/register", {
+    username: registerUsername.value,
+    email: registerEmail.value,
+    password: registerPassword.value,
+  })
+    .then(() => {
+      toast.success("Registration succeeded!", {
+        position: "bottom-left",
+        duration: 1000,
+      });
+      router.push("/login");
+    })
+    .catch((err) => {
+      console.log(err);
+      toast.error("Registration failed!", {
+        position: "bottom-left",
+        duration: 1000,
+      });
+    });
+};
+
+/* export default {
   name: "LoginView",
   data() {
     return {
@@ -172,7 +236,7 @@ export default {
         });
     },
   },
-};
+}; */
 </script>
 
 <style scoped></style>
