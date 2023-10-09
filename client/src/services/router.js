@@ -18,6 +18,7 @@ const routes = [
       title: "JS23",
       authRequired: true,
       authForbidden: false,
+      requireAdmin: false,
     },
   },
   {
@@ -28,6 +29,7 @@ const routes = [
       title: "JS23 - lektioner",
       authRequired: true,
       authForbidden: false,
+      requireAdmin: false,
     },
   },
   {
@@ -38,6 +40,7 @@ const routes = [
       title: "JS23 - klassrådsprotokoll",
       authRequired: true,
       authForbidden: false,
+      requireAdmin: false,
     },
   },
   {
@@ -48,6 +51,7 @@ const routes = [
       title: "Login",
       authRequired: false,
       authForbidden: true,
+      requireAdmin: false,
     },
   },
   {
@@ -58,6 +62,7 @@ const routes = [
       title: "Register",
       authRequired: false,
       authForbidden: true,
+      requireAdmin: false,
     },
   },
   {
@@ -68,6 +73,7 @@ const routes = [
       title: "User profile",
       authRequired: true,
       authForbidden: false,
+      requireAdmin: false,
     },
   },
   {
@@ -78,6 +84,7 @@ const routes = [
       title: "Create New Post",
       authRequired: true,
       authForbidden: false,
+      requireAdmin: true,
     },
   },
   {
@@ -88,6 +95,7 @@ const routes = [
       title: "Edit Post",
       authRequired: true,
       authForbidden: false,
+      requireAdmin: true,
     },
   },
 ];
@@ -106,10 +114,13 @@ router.beforeEach(async (to, from, next) => {
 
   // control routes
   const isAuthenticated = store.state.userLoggedIn;
+  const isAdmin = store.state.userIsAdmin;
   if (!isAuthenticated && to.meta.authRequired) {
     next({ name: "login" });
   } else if (isAuthenticated && to.meta.authForbidden) {
     next({ name: "user" });
+  } else if (!isAdmin && to.meta.requireAdmin) {
+    next({ name: "home" });
   } else {
     next();
   }

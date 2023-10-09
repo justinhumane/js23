@@ -4,12 +4,16 @@ import Api from "@/services/api";
 const store = createStore({
   state: {
     user: null,
+    userIsAdmin: false,
     userLoggedIn: false,
     isStoreUpdated: false,
   },
   mutations: {
     setUser(state, payload) {
       state.user = payload;
+    },
+    setUserIsAdmin(state, payload) {
+      state.userIsAdmin = payload;
     },
     setUserIsLoggedIn(state, payload) {
       state.userLoggedIn = payload;
@@ -27,9 +31,11 @@ const store = createStore({
       );
       if (res && res.data) {
         context.commit("setUser", res.data.data);
+        context.commit("setUserIsAdmin", res.data.data.level === 0);
         context.commit("setUserIsLoggedIn", true);
       } else {
         context.commit("setUser", null);
+        context.commit("setUserIsAdmin", false);
         context.commit("setUserIsLoggedIn", false);
         throw new Error("unknown error");
       }
@@ -38,9 +44,11 @@ const store = createStore({
       try {
         const res = await Api.get("/users");
         context.commit("setUser", res.data.data);
+        context.commit("setUserIsAdmin", res.data.data.level === 0);
         context.commit("setUserIsLoggedIn", true);
       } catch (e) {
         context.commit("setUser", null);
+        context.commit("setUserIsAdmin", false);
         context.commit("setUserIsLoggedIn", false);
       } finally {
         context.commit("setIsStoreUpdated", true);
@@ -52,6 +60,7 @@ const store = createStore({
       });
       if (res) {
         context.commit("setUser", null);
+        context.commit("setUserIsAdmin", false);
         context.commit("setUserIsLoggedIn", false);
       }
     },

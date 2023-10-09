@@ -106,7 +106,7 @@
             <div class="col-span-2 flex items-center">
               {{ link.title }}
             </div>
-            <div class="col-span-2 flex items-center">
+            <div class="col-span-2 flex items-center text-ellipsis truncate">
               {{ link.url }}
             </div>
             <div class="flex flex-col justify-end">
@@ -129,7 +129,7 @@ import axios from "axios";
 import Api from "../services/api";
 import NavigationComp from "../components/NavigationComp.vue";
 import Vue3TagsInput from "vue3-tags-input";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, reactive } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -141,41 +141,44 @@ const post = ref({
   category: "",
   tags: [],
   links: [],
-  postLink: "",
-  postUrl: "",
+  newTags: [],
 });
 
-onMounted(async () => {
-  const response = await axios.get("/api/post/" + route.params.id);
-  post.value = response.data;
-});
-
-const newTags = ref([]);
-const handleChangeTag = (newTags) => {
-  post.value.tags = newTags;
+const initialNewLinkState = {
+  linkTitle: "",
+  linkUrl: "",
 };
 
-const pushLink = () => {
-  post.value.links.push({
-    title: post.value.postLink,
-    url: post.value.postUrl,
-  });
-  post.value.postLink = "";
-  post.value.postUrl = "";
+const newLink = reactive(initialNewLinkState);
+
+const pushLink = (e) => {
+  e.preventDefault();
+  post.links.push({ title: newLink.linkTitle, url: newLink.linkUrl });
+  Object.assign(newLink, initialNewLinkState);
 };
 
 const removeLink = (index) => {
-  post.value.links.splice(index, 1);
+  post.links.splice(index, 1);
+};
+
+onMounted(async () => {
+  const response = await axios.get("/api/post/" + route.params.id);
+  console.log(response.data);
+  post.value = response.data;
+});
+
+const handleChangeTag = (newTags) => {
+  post.tags = newTags;
 };
 
 const savePost = () => {
   Api.put("/post/edit/" + route.params.id, {
-    title: post.value.title,
-    postType: post.value.postType,
-    content: post.value.content,
-    category: post.value.category,
-    tags: post.value.tags,
-    links: post.value.links,
+    title: post.title,
+    postType: post.postType,
+    content: post.content,
+    category: post.category,
+    tags: post.tags,
+    links: post.links,
   });
 };
 </script>

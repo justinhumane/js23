@@ -7,7 +7,6 @@
 </template>
 
 <script setup>
-import NavigationComp from "./components/NavigationComp.vue";
 </script>
 
 <style>

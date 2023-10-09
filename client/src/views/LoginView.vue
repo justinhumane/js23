@@ -33,146 +33,21 @@
           Registera
         </button>
       </div>
-      <div
-        :class="{ hidden: !loginActive, visible: loginActive }"
-        class="p-10 rounded-b bg-slate-100 dark:bg-slate-700"
-      >
-        <FormKit
-          type="form"
-          submit-label="Logga in"
-          :submit-attrs="{
-            inputClass:
-              'transition w-full duration-300 font-bold p-2 rounded bg-amber-300 hover:bg-amber-400 text-slate-700 dark:bg-sky-700 dark:hover:bg-sky-500 dark:text-slate-200',
-          }"
-          @submit="login()"
-        >
-          <FormKit
-            type="text"
-            label="Email"
-            placeholder="anders@svensson.se"
-            label-class="text-sm font-bold"
-            input-class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
-            v-model="loginEmail"
-          />
-          <FormKit
-            type="password"
-            label="Lösenord"
-            placeholder="**********"
-            label-class="text-sm font-bold"
-            input-class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
-            v-model="loginPassword"
-          />
-        </FormKit>
-      </div>
-      <div
+      <LoginComp :class="{ hidden: !loginActive, visible: loginActive }" />
+      <RegisterComp
         :class="{ hidden: !registerActive, visible: registerActive }"
-        class="p-10 rounded-b bg-slate-100 dark:bg-slate-700"
-      >
-        <FormKit
-          type="form"
-          submit-label="Registrera"
-          :submit-attrs="{
-            inputClass:
-              'transition w-full duration-300 font-bold p-2 rounded bg-amber-300 hover:bg-amber-400 text-slate-700 dark:bg-sky-700 dark:hover:bg-sky-500 dark:text-slate-200',
-          }"
-          @submit="register()"
-        >
-          <FormKit
-            type="text"
-            label="Användarnamn"
-            placeholder="anderssvensson"
-            label-class="text-sm font-bold"
-            input-class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
-            v-model="registerUsername"
-          />
-          <FormKit
-            type="text"
-            label="Email"
-            placeholder="anders@svensson.se"
-            label-class="text-sm font-bold"
-            input-class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
-            v-model="registerEmail"
-          />
-          <FormKit
-            type="password"
-            label="Lösenord"
-            placeholder="**********"
-            label-class="text-sm font-bold"
-            input-class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
-            v-model="registerPassword"
-          />
-        </FormKit>
-      </div>
+      />
     </div>
   </div>
 </template>
 
 <script setup>
-import Api from "../services/api";
-import { ref, computed, inject } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-import { useToast } from "vue-toast-notification";
+import LoginComp from "../components/LoginComp.vue";
+import RegisterComp from "../components/RegisterComp.vue";
+import { ref } from "vue";
 
-const store = useStore();
-const router = useRouter();
-const toast = useToast();
-
-const loginEmail = ref("");
-const loginPassword = ref("");
-const registerUsername = ref("");
-const registerEmail = ref("");
-const registerPassword = ref("");
 const loginActive = ref(true);
 const registerActive = ref(false);
-
-const isUserLoggedIn = computed(() => {
-  return store.state.userLoggedIn;
-});
-
-const login = async () => {
-  try {
-    await store.dispatch("login", {
-      email: loginEmail.value,
-      password: loginPassword.value,
-    });
-    if (isUserLoggedIn.value) {
-      toast.success("Authentication succeeded.", {
-        position: "bottom-left",
-        duration: 10000,
-      });
-      await router.push("/");
-    }
-  } catch (err) {
-    console.log(err);
-    toast.error(`Authentication failed! Error: ${err}`, {
-      position: "bottom-left",
-      duration: 1000,
-    });
-  }
-};
-
-const register = () => {
-  Api.post("/users/register", {
-    username: registerUsername.value,
-    email: registerEmail.value,
-    password: registerPassword.value,
-  })
-    .then(() => {
-      toast.success("Registration succeeded!", {
-        position: "bottom-left",
-        duration: 1000,
-      });
-      router.push("/login");
-    })
-    .catch((err) => {
-      console.log(err);
-      toast.error("Registration failed!", {
-        position: "bottom-left",
-        duration: 1000,
-      });
-    });
-};
 </script>
 
 <style scoped></style>

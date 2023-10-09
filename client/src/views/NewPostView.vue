@@ -20,7 +20,7 @@
               placeholder=""
               label-class="text-sm font-bold"
               input-class="p-2 w-full rounded mb-4 bg-slate-300 dark:bg-slate-500"
-              v-model="title"
+              v-model="post.title"
             />
             <div class="grid grid-cols-2 gap-4">
               <FormKit
@@ -29,7 +29,7 @@
                 placeholder="Välj en inläggstyp"
                 label-class="text-sm font-bold"
                 input-class="p-2 w-full rounded mb-4 bg-slate-300 dark:bg-slate-500"
-                v-model="postType"
+                v-model="post.postType"
                 :options="['Lektion', 'Klassrådsprotokoll']"
               />
               <FormKit
@@ -38,7 +38,7 @@
                 placeholder="Välj en kategori"
                 label-class="text-sm font-bold"
                 input-class="p-2 w-full rounded mb-4 bg-slate-300 dark:bg-slate-500"
-                v-model="category"
+                v-model="post.category"
                 :options="[
                   'HTML & CSS',
                   'Javascript',
@@ -56,11 +56,11 @@
               rows="10"
               label-class="text-sm font-bold"
               input-class="p-2 w-full rounded mb-4 bg-slate-300 dark:bg-slate-500"
-              v-model="content"
+              v-model="post.content"
             />
             <label class="text-sm font-bold">Taggar</label>
             <vue3-tags-input
-              :tags="newTags"
+              :tags="post.newTags"
               id="tags"
               @on-tags-changed="handleChangeTag"
             />
@@ -73,7 +73,7 @@
                 outer-class="col-span-2"
                 label-class="text-sm font-bold"
                 input-class="p-2 w-full rounded bg-slate-300 dark:bg-slate-500"
-                v-model="postLink"
+                v-model="newLink.linkTitle"
               />
               <FormKit
                 type="text"
@@ -82,7 +82,7 @@
                 outer-class="col-span-2"
                 label-class="text-sm font-bold"
                 input-class="p-2 w-full rounded bg-slate-300 dark:bg-slate-500"
-                v-model="postUrl"
+                v-model="newLink.linkUrl"
               />
               <div class="flex flex-col justify-end">
                 <button
@@ -93,13 +93,13 @@
                 </button>
               </div>
             </div>
-            <h3 v-if="links.length > 0">Hantera länkar</h3>
-            <div v-if="links.length > 0" class="grid grid-cols-5 gap-4">
+            <h3 v-if="post.links.length > 0">Hantera länkar</h3>
+            <div v-if="post.links.length > 0" class="grid grid-cols-5 gap-4">
               <div class="col-span-2 text-small font-bold">Titel</div>
               <div class="col-span-3 text-small font-bold">URL</div>
             </div>
             <div
-              v-for="(link, index) in links"
+              v-for="(link, index) in post.links"
               :key="link.index"
               :class="{ 'bg-slate-900': index % 2 }"
               class="grid grid-cols-5 gap-4 rounded p-2 mb-6"
@@ -130,46 +130,53 @@
 import Api from "../services/api";
 import NavigationComp from "../components/NavigationComp.vue";
 import Vue3TagsInput from "vue3-tags-input";
-import { ref } from "vue";
+import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toast-notification";
 
 const router = useRouter();
 const toast = useToast();
 
-const title = ref("");
-const postType = ref("");
-const content = ref("");
-const category = ref("");
-const tags = ref([]);
-const links = ref([]);
-const postLink = ref("");
-const postUrl = ref("");
-const newTags = ref([]);
+const post = reactive({
+  title: "",
+  postType: "",
+  content: "",
+  category: "",
+  tags: [],
+  links: [],
+  newTags: [],
+});
 
-const handleChangeTag = (newTags) => {
-  tags.value = newTags;
+const initialNewLinkState = {
+  linkTitle: "",
+  linkUrl: "",
 };
 
-const pushLink = () => {
-  links.value.push({ title: postLink.value, url: postUrl.value });
-  postLink.value = "";
-  postUrl.value = "";
+const newLink = reactive(initialNewLinkState);
+
+const handleChangeTag = (newTags) => {
+  post.tags = newTags;
+};
+
+const pushLink = (e) => {
+  e.preventDefault();
+  post.links.push({ title: newLink.linkTitle, url: newLink.linkUrl });
+  Object.assign(newLink, initialNewLinkState);
 };
 
 const removeLink = (index) => {
-  links.value.splice(index, 1);
+  post.links.splice(index, 1);
 };
 
 const save = async () => {
   try {
     await Api.post("/post/new", {
-      title: title.value,
-      postType: postType.value,
-      content: content.value,
-      category: category.value,
-      tags: tags.value,
-      links: links.value,
+      title: post.title,
+      postType: post.postType,
+      content: post.content,
+      category: post.category,
+      tags: post.tags,
+      links: post.links,
     });
     toast.success("Registration succeeded!", {
       position: "bottom-left",
