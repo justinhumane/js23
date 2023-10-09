@@ -28,7 +28,7 @@
         v-for="tag in tags"
         :key="tag"
         to="/asd"
-        class="ml-2 px-2 py-1 font-semibold rounded text-sm transition duration-300 text-slate-100 bg-sky-700 hover:bg-sky-900 dark:bg-amber-300 dark:text-slate-800 dark:hover:bg-amber-400"
+        class="ml-2 px-2 py-1 font-semibold rounded text-sm transition duration-300 text-slate-100 bg-sky-700 hover:bg-sky-900 dark:bg-amber-300 dark:text-slate-800 dark:hover:bg-amber-500"
         >{{ tag }}</router-link
       >
     </div>

@@ -1,7 +1,9 @@
+require("dotenv").config();
 const express = require("express");
 const User = require("../../models/User");
 const jwt = require("jsonwebtoken");
-const { SECRET, MAX_AGE } = require("../../consts");
+const SECRET = process.env.SECRET;
+const MAX_AGE = process.env.MAX_AGE;
 const { requireLogin } = require("../../middleware/auth");
 
 const router = express.Router();
