@@ -11,7 +11,7 @@
             inputClass:
               'transition duration-300 font-bold p-2 rounded bg-amber-300 hover:bg-amber-400 text-slate-700 dark:bg-sky-700 dark:hover:bg-sky-500 dark:text-slate-200 self-start',
           }"
-          @submit="save()"
+          @submit="savePost()"
         >
           <FormKit
             type="text"
@@ -124,64 +124,59 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import axios from "axios";
 import Api from "../services/api";
 import NavigationComp from "../components/NavigationComp.vue";
 import Vue3TagsInput from "vue3-tags-input";
+import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 
-export default {
-  name: "EditPostView",
-  components: {
-    NavigationComp,
-    Vue3TagsInput,
-  },
-  data() {
-    return {
-      post: [
-        {
-          title: "",
-          postType: "",
-          content: "",
-          category: "",
-          tags: [],
-          links: [],
-          postLink: "",
-          postUrl: "",
-        },
-      ],
-    };
-  },
-  methods: {
-    save() {
-      Api.put("/post/edit/" + this.$route.params.id, {
-        title: this.post.title,
-        postType: this.post.postType,
-        content: this.post.content,
-        category: this.post.category,
-        tags: this.post.tags,
-        links: this.post.links,
-      });
-    },
-    handleChangeTag(tags) {
-      this.post.tags = tags;
-    },
-    pushLink() {
-      this.post.links.push({
-        title: this.post.postLink,
-        url: this.post.postUrl,
-      });
-      this.post.postLink = "";
-      this.post.postUrl = "";
-    },
-    removeLink(index) {
-      this.post.links.splice(index, 1);
-    },
-  },
-  async mounted() {
-    const response = await axios.get("/api/post/" + this.$route.params.id);
-    this.post = response.data;
-  },
+const route = useRoute();
+
+const post = ref({
+  title: "",
+  postType: "",
+  content: "",
+  category: "",
+  tags: [],
+  links: [],
+  postLink: "",
+  postUrl: "",
+});
+
+onMounted(async () => {
+  const response = await axios.get("/api/post/" + route.params.id);
+  post.value = response.data;
+});
+
+const newTags = ref([]);
+const handleChangeTag = (newTags) => {
+  post.value.tags = newTags;
+};
+
+const pushLink = () => {
+  post.value.links.push({
+    title: post.value.postLink,
+    url: post.value.postUrl,
+  });
+  post.value.postLink = "";
+  post.value.postUrl = "";
+};
+
+const removeLink = (index) => {
+  post.value.links.splice(index, 1);
+};
+
+const savePost = () => {
+  Api.put("/post/edit/" + route.params.id, {
+    title: post.value.title,
+    postType: post.value.postType,
+    content: post.value.content,
+    category: post.value.category,
+    tags: post.value.tags,
+    links: post.value.links,
+  });
 };
 </script>
 

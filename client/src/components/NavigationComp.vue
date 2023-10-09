@@ -120,39 +120,37 @@
   </nav>
 </template>
 
-<script>
-export default {
-  name: "NavigationComp",
-  data() {
-    return {
-      menuOpen: false,
-    };
-  },
-  methods: {
-    async logout() {
-      try {
-        await this.$store.dispatch("logout");
-        if (!this.isUserLoggedIn) {
-          this.$toast.success("Successfully logged out.", {
-            position: "bottom-left",
-            duration: 1000,
-          });
-          await this.$router.push("/login");
-        }
-      } catch (e) {
-        console.log(e);
-        this.$toast.error("Couldn't log out.", {
-          position: "bottom-left",
-          duration: 1000,
-        });
-      }
-    },
-  },
-  computed: {
-    user() {
-      return this.$store.state.user;
-    },
-  },
+<script setup>
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
+import { useToast } from "vue-toast-notification";
+import { useStore } from "vuex";
+
+const store = useStore();
+const router = useRouter();
+const toast = useToast();
+const menuOpen = ref(false);
+const user = computed(() => {
+  return store.state.user;
+});
+
+const logout = async () => {
+  try {
+    await store.dispatch("logout");
+    if (!store.state.userLoggedIn) {
+      toast.success("Successfully logged out.", {
+        position: "bottom-left",
+        duration: 1000,
+      });
+      await router.push("/login");
+    }
+  } catch (e) {
+    console.log(e);
+    toast.error("Couldn't log out.", {
+      position: "bottom-left",
+      duration: 1000,
+    });
+  }
 };
 </script>
 

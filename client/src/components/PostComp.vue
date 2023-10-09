@@ -3,7 +3,7 @@
     <div class="flex justify-between">
       <p class="mb-0 font-mono">{{ type }}</p>
       <time datetime="2023-10-06 12:00" class="font-mono">{{
-        newCreated
+        dayjs(createdAt).format("YYYY-MM-DD HH:mm")
       }}</time>
     </div>
     <h1>{{ title }}</h1>
@@ -89,11 +89,16 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import Api from "../services/api";
 import dayjs from "dayjs";
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 
-/* defineProps({
+const store = useStore();
+const route = useRoute();
+
+defineProps({
   id: String,
   title: String,
   type: String,
@@ -105,35 +110,8 @@ import dayjs from "dayjs";
 });
 
 const deletePost = () => {
-  Api.delete("/post/" + this.id);
+  Api.delete("/post/" + route.params.id);
 };
 
-const user = this.store.state.user; */
-
-export default {
-  name: "PostComp",
-  props: {
-    id: String,
-    title: String,
-    type: String,
-    category: String,
-    tags: Array,
-    content: String,
-    links: Array,
-    createdAt: String,
-  },
-  methods: {
-    deletePost() {
-      Api.delete("/post/" + this.id);
-    },
-  },
-  computed: {
-    newCreated() {
-      return dayjs(this.createdAt).format("YYYY-MM-DD HH:mm");
-    },
-    user() {
-      return this.$store.state.user;
-    },
-  },
-};
+const user = store.state.user;
 </script>
