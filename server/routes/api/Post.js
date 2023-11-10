@@ -7,23 +7,25 @@ router.get("/", async (req, res) => {
     const pagination = 10;
     const page = req.query.page ? parseInt(req.query.page) : 1;
 
-    const allPosts = await Post.find();
-    const postCount = allPosts.length;
+    let query = {}; // Initialize an empty query object
 
-    const filteredPosts = await Post.find()
+    if (req.query.type) {
+      query.postType = req.query.type;
+    }
+    if (req.query.category) {
+      query.category = req.query.category;
+    }
+
+    const postCount = await Post.countDocuments(query); // Count documents based on the query
+
+    const filteredPosts = await Post.find(query)
       .skip((page - 1) * pagination)
       .limit(pagination)
       .sort({ createdAt: "desc" });
 
-    if (req.query.type) {
-      filteredPosts.where({ postType: req.query.type });
-    }
-    if (req.query.category) {
-      filteredPosts.where({ category: req.query.category });
-    }
-
     const posts = {
       post_count: postCount,
+      max_posts: pagination,
       data: filteredPosts,
       current_page: page,
       last_page: Math.ceil(postCount / pagination),

@@ -16,6 +16,7 @@
       />
     </div>
     <PaginationComp
+      v-if="posts.max_posts < posts.post_count"
       :postCount="posts.post_count"
       :numberOfPages="posts.last_page"
       :currentPage="currentPage"
