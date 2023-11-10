@@ -8,6 +8,7 @@ import NewPostView from "../views/NewPostView.vue";
 import EditPostView from "../views/EditPostView.vue";
 import ClassesView from "../views/ClassesView.vue";
 import ProtocolView from "../views/ProtocolView.vue";
+import PostView from "../views/PostView.vue";
 
 const routes = [
   {
@@ -96,6 +97,17 @@ const routes = [
       authRequired: true,
       authForbidden: false,
       requireAdmin: true,
+    },
+  },
+  {
+    path: "/post/:id",
+    name: "viewPost",
+    component: PostView,
+    meta: {
+      title: "Post",
+      authRequired: true,
+      authForbidden: false,
+      requireAdmin: false,
     },
   },
 ];

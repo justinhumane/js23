@@ -38,15 +38,6 @@ import PaginationComp from "../components/PaginationComp.vue";
 const posts = ref([]);
 const currentPage = ref(1);
 
-const fetchPosts = async () => {
-  const response = await axios.get("/api/post?type=Klassrådsprotokoll");
-  posts.value = response.data;
-};
-
-onMounted(() => {
-  fetchPosts();
-});
-
 const goToPage = (page) => {
   currentPage.value = page;
 };
@@ -57,10 +48,14 @@ const goToNextPage = () => {
 
 const goToPreviousPage = () => {
   currentPage.value -= 1;
-  fetchPosts();
 };
 
-watch(currentPage, async (newPage, oldPage) => {
-  fetchPosts();
-});
+watch(
+  currentPage,
+  async (newPage, oldPage) => {
+    const response = await axios.get("/api/post?type=Klassrådsprotokoll");
+    posts.value = response.data;
+  },
+  { immediate: true }
+);
 </script>

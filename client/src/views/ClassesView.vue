@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch } from "vue";
 import axios from "axios";
 import NavigationComp from "../components/NavigationComp.vue";
 import PostComp from "../components/PostComp.vue";
@@ -37,17 +37,6 @@ import PaginationComp from "../components/PaginationComp.vue";
 
 const posts = ref([]);
 const currentPage = ref(1);
-
-const fetchPosts = async () => {
-  const response = await axios.get(
-    `/api/post/?type=Lektion&page=${currentPage}`
-  );
-  posts.value = response.data;
-};
-
-onMounted(() => {
-  fetchPosts();
-});
 
 const goToPage = (page) => {
   currentPage.value = page;
@@ -59,10 +48,18 @@ const goToNextPage = () => {
 
 const goToPreviousPage = () => {
   currentPage.value -= 1;
-  fetchPosts();
 };
 
-watch(currentPage, async (newPage, oldPage) => {
-  fetchPosts();
-});
+watch(
+  currentPage,
+  async (newPage, oldPage) => {
+    const response = await axios.get(
+      `/api/post/?type=Lektion&page=${currentPage}`
+    );
+    posts.value = response.data;
+  },
+  {
+    immediate: true,
+  }
+);
 </script>

@@ -6,7 +6,7 @@
       <div>
         <FormKit
           type="form"
-          submit-label="Publicera inlägg"
+          submit-label="Spara inlägg"
           :submit-attrs="{
             inputClass:
               'transition duration-300 font-bold p-2 rounded bg-amber-300 hover:bg-amber-400 text-slate-700 dark:bg-sky-700 dark:hover:bg-sky-500 dark:text-slate-200 self-start',
@@ -71,7 +71,7 @@
               outer-class="col-span-2"
               label-class="text-sm font-bold"
               input-class="p-2 w-full rounded bg-slate-300 dark:bg-slate-500"
-              v-model="post.postLink"
+              v-model="newLink.linkTitle"
             />
             <FormKit
               type="text"
@@ -80,7 +80,7 @@
               outer-class="col-span-2"
               label-class="text-sm font-bold"
               input-class="p-2 w-full rounded bg-slate-300 dark:bg-slate-500"
-              v-model="post.postUrl"
+              v-model="newLink.linkUrl"
             />
             <div class="flex flex-col justify-end">
               <button
@@ -153,17 +153,17 @@ const newLink = reactive(initialNewLinkState);
 
 const pushLink = (e) => {
   e.preventDefault();
-  post.links.push({ title: newLink.linkTitle, url: newLink.linkUrl });
+  console.log(newLink);
+  post.value.links.push({ title: newLink.linkTitle, url: newLink.linkUrl });
   Object.assign(newLink, initialNewLinkState);
 };
 
 const removeLink = (index) => {
-  post.links.splice(index, 1);
+  post.value.links.splice(index, 1);
 };
 
 onMounted(async () => {
   const response = await axios.get("/api/post/" + route.params.id);
-  console.log(response.data);
   post.value = response.data;
 });
 
@@ -173,12 +173,12 @@ const handleChangeTag = (newTags) => {
 
 const savePost = () => {
   Api.put("/post/edit/" + route.params.id, {
-    title: post.title,
-    postType: post.postType,
-    content: post.content,
-    category: post.category,
-    tags: post.tags,
-    links: post.links,
+    title: post.value.title,
+    postType: post.value.postType,
+    content: post.value.content,
+    category: post.value.category,
+    tags: post.value.tags,
+    links: post.value.links,
   });
 };
 </script>

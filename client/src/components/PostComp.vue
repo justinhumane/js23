@@ -1,12 +1,14 @@
 <template>
   <div class="p-5 rounded my-10 bg-slate-100 dark:bg-slate-800">
     <div class="flex justify-between">
-      <p class="mb-0 font-mono">{{ type }}</p>
-      <time datetime="2023-10-06 12:00" class="font-mono">{{
+      <p class="mb-0 font-mono text-sm">{{ type }}</p>
+      <time datetime="2023-10-06 12:00" class="font-mono text-sm">{{
         dayjs(createdAt).format("YYYY-MM-DD HH:mm")
       }}</time>
     </div>
-    <h1>{{ title }}</h1>
+    <h1>
+      <router-link :to="`/post/${id}`">{{ title }}</router-link>
+    </h1>
     <div
       v-if="type === 'Lektion'"
       class="flex items-center font-bold mt-2 mb-4"
@@ -32,14 +34,17 @@
         >{{ tag }}</router-link
       >
     </div>
-    <div class="mb-2 content" v-html="content"></div>
-    <div v-if="links.length > 0">
+    <div class="my-4 content" v-html="content"></div>
+    <div
+      v-if="links.length > 0"
+      class="dark:bg-slate-700 bg-slate-300 p-4 rounded mt-4"
+    >
       <h3 class="mb-1">Nyttiga länkar</h3>
       <a
         v-for="link in links"
         :key="link.index"
         :href="link.url"
-        class="group flex items-center font-semibold hover:text-amber-300"
+        class="group flex items-center font-semibold dark:hover:text-amber-300 hover:text-sky-700"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -68,6 +73,9 @@
           />
         </svg>
       </a>
+    </div>
+    <div v-if="route.name == 'home'" class="font-mono text-sm mt-4">
+      <router-link :to="`/post/${id}`">34 kommentarer</router-link>
     </div>
     <div v-if="user.level === 0" class="mt-4">
       <router-link :to="`/post/edit/${id}`" v-slot="{ href, navigate }">
