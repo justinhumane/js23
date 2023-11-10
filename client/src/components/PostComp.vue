@@ -74,14 +74,14 @@
         <button
           :href="href"
           @click="navigate"
-          class="text-sm font-semibold transition duration-300 py-1 px-2 rounded-l dark:bg-emerald-700 dark:hover:bg-emerald-900"
+          class="text-sm font-semibold transition duration-300 py-1 px-2 rounded-l text-slate-100 bg-emerald-700 hover:bg-emerald-900"
         >
           Editera
         </button></router-link
       >
       <button
         @click="deletePost"
-        class="text-sm font-semibold transition duration-300 py-1 px-2 rounded-r dark:bg-red-600 dark:hover:bg-red-900"
+        class="text-sm font-semibold transition duration-300 py-1 px-2 rounded-r text-slate-100 bg-red-600 hover:bg-red-900"
       >
         Ta bort
       </button>

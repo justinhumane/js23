@@ -4,16 +4,31 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const query = Post.find().sort({ createdAt: "desc" });
+    const pagination = 10;
+    const page = req.query.page ? parseInt(req.query.page) : 1;
+
+    const allPosts = await Post.find();
+    const postCount = allPosts.length;
+
+    const filteredPosts = await Post.find()
+      .skip((page - 1) * pagination)
+      .limit(pagination)
+      .sort({ createdAt: "desc" });
 
     if (req.query.type) {
-      query.where({ postType: req.query.type });
+      filteredPosts.where({ postType: req.query.type });
     }
     if (req.query.category) {
-      query.where({ category: req.query.category });
+      filteredPosts.where({ category: req.query.category });
     }
 
-    const posts = await query;
+    const posts = {
+      post_count: postCount,
+      data: filteredPosts,
+      current_page: page,
+      last_page: Math.ceil(postCount / pagination),
+    };
+
     if (!posts) throw new Error("No posts found!");
     res.status(200).json(posts);
   } catch (error) {

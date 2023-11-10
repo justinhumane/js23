@@ -7,7 +7,7 @@
         :key="post._id"
         :id="post._id"
         :title="post.title"
-        :type="post.type"
+        type="Lektion"
         :category="post.category"
         :tags="post.tags"
         :content="post.content"
