@@ -37,7 +37,7 @@
     <div class="my-4 content" v-html="content"></div>
     <div
       v-if="links.length > 0"
-      class="dark:bg-slate-700 bg-slate-300 p-4 rounded mt-4"
+      class="dark:bg-slate-700 bg-slate-200 p-4 rounded mt-4"
     >
       <h3 class="mb-1">Nyttiga länkar</h3>
       <a
@@ -75,7 +75,9 @@
       </a>
     </div>
     <div v-if="route.name == 'home'" class="font-mono text-sm mt-4">
-      <router-link :to="`/post/${id}`">34 kommentarer</router-link>
+      <router-link :to="`/post/${id}`"
+        >{{ comments.length }} kommentarer</router-link
+      >
     </div>
     <div v-if="user.level === 0" class="mt-4">
       <router-link :to="`/post/edit/${id}`" v-slot="{ href, navigate }">
@@ -115,6 +117,7 @@ defineProps({
   content: String,
   links: Array,
   createdAt: String,
+  comments: Array,
 });
 
 const deletePost = () => {

@@ -13,6 +13,7 @@
         :content="post.content"
         :links="post.links"
         :createdAt="post.createdAt"
+        :comments="post.comments"
       />
     </div>
     <PaginationComp

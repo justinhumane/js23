@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
     const pagination = 10;
     const page = req.query.page ? parseInt(req.query.page) : 1;
 
-    let query = {}; // Initialize an empty query object
+    let query = {};
 
     if (req.query.type) {
       query.postType = req.query.type;
@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
       query.category = req.query.category;
     }
 
-    const postCount = await Post.countDocuments(query); // Count documents based on the query
+    const postCount = await Post.countDocuments(query);
 
     const filteredPosts = await Post.find(query)
       .skip((page - 1) * pagination)

@@ -18,8 +18,8 @@ const createJwt = (payload) => {
  * @access Private
  */
 router.post("/register", (req, res) => {
-  const { username, email, password } = req.body;
-  User.create({ username, email, password })
+  const { username, firstName, lastName, email, password } = req.body;
+  User.create({ username, firstName, lastName, email, password })
     .then(() => {
       return res.status(200).json({ message: "success" });
     })
@@ -74,7 +74,14 @@ router.get("/", requireLogin, (req, res) => {
   const _id = jwt.verify(token, SECRET).payload;
   User.findOne(
     { _id },
-    { username: 1, email: 1, registrationDate: 1, level: 1 }
+    {
+      username: 1,
+      firstName: 1,
+      lastName: 1,
+      email: 1,
+      registrationDate: 1,
+      level: 1,
+    }
   )
     .then((user) => {
       return res.status(200).json({ message: "success", data: user });
@@ -85,6 +92,22 @@ router.get("/", requireLogin, (req, res) => {
         .status(401)
         .json({ message: "error", code: "unauthenticated-access" });
     });
+});
+
+router.put("/edit/:id", async (req, res) => {
+  const { username, firstName, lastName, email } = req.body;
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, {
+      username,
+      firstName,
+      lastName,
+      email,
+    });
+    if (!user) throw new Error("Something went wrong updating the user!");
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 module.exports = router;

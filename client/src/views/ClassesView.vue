@@ -25,6 +25,7 @@
         @goToPreviousPage="goToPreviousPage"
       />
     </div>
+    <FooterComp />
   </div>
 </template>
 
@@ -34,6 +35,7 @@ import axios from "axios";
 import NavigationComp from "../components/NavigationComp.vue";
 import PostComp from "../components/PostComp.vue";
 import PaginationComp from "../components/PaginationComp.vue";
+import FooterComp from "../components/FooterComp.vue";
 
 const posts = ref([]);
 const currentPage = ref(1);

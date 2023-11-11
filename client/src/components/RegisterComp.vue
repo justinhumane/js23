@@ -19,6 +19,22 @@
       />
       <FormKit
         type="text"
+        label="Förnamn"
+        placeholder="Anders"
+        label-class="text-sm font-bold"
+        input-class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
+        v-model="credentials.firstName"
+      />
+      <FormKit
+        type="text"
+        label="Efternamn"
+        placeholder="Svensson"
+        label-class="text-sm font-bold"
+        input-class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
+        v-model="credentials.lastName"
+      />
+      <FormKit
+        type="text"
         label="Email"
         placeholder="anders@svensson.se"
         label-class="text-sm font-bold"
@@ -55,6 +71,8 @@ const credentials = reactive({
 const register = () => {
   Api.post("/users/register", {
     username: credentials.username,
+    firstName: credentials.firstName,
+    lastName: credentials.lastName,
     email: credentials.email,
     password: credentials.password,
   })

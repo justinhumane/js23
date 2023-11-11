@@ -5,12 +5,9 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const TodoListRoutes = require("./routes/api/Todolist");
 const UserRoutes = require("./routes/api/User");
 const postRoutes = require("./routes/api/Post");
-
-const { Router } = require("express");
-const router = Router();
+const commentRoutes = require("./routes/api/Comment");
 
 const app = express();
 
@@ -33,12 +30,9 @@ mongoose
   .then(() => console.log("MongoDB database Connected..."))
   .catch((err) => console.log(err));
 
-const path = require("path");
-/* const apiRoutes = require("./routes");
-app.use("/api", apiRoutes); */
-/* app.use("/api/TodoList", TodoListRoutes); */
 app.use("/api/users", UserRoutes);
 app.use("/api/post", postRoutes);
+app.use("/api/comment", commentRoutes);
 
 app.listen(process.env.PORT, () =>
   console.log(`App listening at http://localhost:${process.env.PORT}`)
