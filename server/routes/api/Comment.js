@@ -7,7 +7,7 @@ router.get("/post/:postId", async (req, res) => {
   try {
     const postId = req.params.postId;
     const comments = await Comment.find({ post: postId })
-      .populate("user", "username")
+      .populate("user", "firstName lastName")
       .populate("parentComment")
       .populate({
         path: "children",

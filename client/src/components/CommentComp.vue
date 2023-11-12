@@ -11,12 +11,7 @@
     >
       <div class="flex justify-between items-center">
         <div class="flex items-center gap-2 font-bold">
-          <img
-            src="https://avatars.githubusercontent.com/u/86984290?v=4"
-            class="w-8 h-8 rounded-full"
-            alt=""
-          />
-          {{ comment.user.username }}
+          {{ comment.user.firstName + " " + comment.user.lastName }}
         </div>
         <div class="font-mono">
           {{ dayjs(comment.createdAt).format("YYYY-MM-DD HH:mm") }}
