@@ -15,6 +15,9 @@ router.get("/", async (req, res) => {
     if (req.query.category) {
       query.category = req.query.category;
     }
+    if (req.query.tag) {
+      query.tags = req.query.tag;
+    }
 
     const postCount = await Post.countDocuments(query);
 

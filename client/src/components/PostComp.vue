@@ -15,7 +15,7 @@
     >
       Kurs
       <router-link
-        to="/asd"
+        :to="`/category/${category}`"
         class="mx-2 px-2 py-1 font-semibold rounded text-sm transition duration-300 bg-amber-300 hover:bg-amber-400 dark:bg-sky-700 dark:hover:bg-sky-900"
         >{{ category }}</router-link
       >
@@ -29,7 +29,7 @@
       <router-link
         v-for="tag in tags"
         :key="tag"
-        to="/asd"
+        :to="`/tag/${tag}`"
         class="ml-2 px-2 py-1 font-semibold rounded text-sm transition duration-300 text-slate-100 bg-sky-700 hover:bg-sky-900 dark:bg-amber-300 dark:text-slate-800 dark:hover:bg-amber-500"
         >{{ tag }}</router-link
       >
@@ -108,6 +108,8 @@ import { useStore } from "vuex";
 const store = useStore();
 const route = useRoute();
 
+const user = store.state.user;
+
 defineProps({
   id: String,
   title: String,
@@ -123,6 +125,4 @@ defineProps({
 const deletePost = () => {
   Api.delete("/post/" + route.params.id);
 };
-
-const user = store.state.user;
 </script>

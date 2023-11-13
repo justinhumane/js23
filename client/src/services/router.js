@@ -9,6 +9,8 @@ import EditPostView from "../views/EditPostView.vue";
 import ClassesView from "../views/ClassesView.vue";
 import ProtocolView from "../views/ProtocolView.vue";
 import PostView from "../views/PostView.vue";
+import CategoryView from "../views/CategoryView.vue";
+import TagView from "../views/TagView.vue";
 
 const routes = [
   {
@@ -43,6 +45,29 @@ const routes = [
       authForbidden: false,
       requireAdmin: false,
     },
+  },
+  {
+    path: "/category/:category",
+    name: "category",
+    component: CategoryView,
+    meta: {
+      title: "Kategori",
+      authRequired: true,
+      authForbidden: false,
+      requireAdmin: false,
+    },
+  },
+  {
+    path: "/tag/:tag",
+    name: "tag",
+    component: TagView,
+    meta: {
+      title: "Tagg",
+      authRequired: true,
+      authForbidden: false,
+      requireAdmin: false,
+    },
+    props: true,
   },
   {
     path: "/login",
