@@ -43,7 +43,7 @@ const route = useRoute();
 
 const posts = ref([]);
 const currentPage = ref(1);
-const tagTest = ref(route.params.tag);
+const tag = ref(route.params.tag);
 
 const goToPage = (page) => {
   currentPage.value = page;
@@ -60,7 +60,7 @@ const goToPreviousPage = () => {
 watch(
   currentPage,
   async (newPage, oldPage) => {
-    const response = await axios.get(`/api/post?tag=${tagTest.value}`);
+    const response = await axios.get(`/api/post?tag=${tag.value}`);
     posts.value = response.data;
   },
   { immediate: true }
@@ -69,8 +69,8 @@ watch(
 watch(
   () => route.params.tag,
   async (newPage, oldPage) => {
-    tagTest.value = route.params.tag;
-    const response = await axios.get(`/api/post?tag=${tagTest.value}`);
+    tag.value = route.params.tag;
+    const response = await axios.get(`/api/post?tag=${tag.value}`);
     posts.value = response.data;
   }
 );
