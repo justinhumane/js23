@@ -1,11 +1,6 @@
 import axios from "axios";
 
-let baseUrl = "http://localhost:3000/api";
-if (import.meta.env.NODE_ENV === "development") {
-  baseUrl = import.meta.env.VUE_APP_SERVER || "/api";
-} else {
-  baseUrl = import.meta.env.BASE_URL + "api";
-}
+let baseUrl = "https://js23api.justinhumane.com";
 
 const api = axios.create({
   baseURL: baseUrl,
