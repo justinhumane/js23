@@ -167,7 +167,7 @@ router.beforeEach(async (to, from, next) => {
   if (!isAuthenticated && to.meta.authRequired) {
     next({ name: "login" });
   } else if (isAuthenticated && to.meta.authForbidden) {
-    next({ name: "user" });
+    next({ name: "home" });
   } else if (!isAdmin && to.meta.requireAdmin) {
     next({ name: "home" });
   } else if (!isApproved && to.meta.requireApproved) {
