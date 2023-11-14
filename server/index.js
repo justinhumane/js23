@@ -22,6 +22,7 @@ if (process.env.NODE_ENV === "development") {
         "https://justinhumane.com",
         "justinhumane.com",
       ],
+      credentials: true,
     })
   );
 }
