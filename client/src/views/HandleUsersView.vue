@@ -28,13 +28,12 @@
 import { onMounted, ref } from "vue";
 import NavigationComp from "../components/NavigationComp.vue";
 import FooterComp from "../components/FooterComp.vue";
-import axios from "axios";
 import Api from "../services/api";
 
 const users = ref([]);
 
 onMounted(async () => {
-  const response = await axios.get("/api/users/unapproved");
+  const response = await Api.get("/users/unapproved");
   users.value = response.data;
 });
 

@@ -125,7 +125,6 @@
 </template>
 
 <script setup>
-import axios from "axios";
 import Api from "../services/api";
 import NavigationComp from "../components/NavigationComp.vue";
 import Vue3TagsInput from "vue3-tags-input";
@@ -163,7 +162,7 @@ const removeLink = (index) => {
 };
 
 onMounted(async () => {
-  const response = await axios.get("/api/post/" + route.params.id);
+  const response = await Api.get("/post/" + route.params.id);
   post.value = response.data;
 });
 

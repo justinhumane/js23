@@ -82,11 +82,9 @@ const comment = reactive({
 });
 
 onMounted(async () => {
-  const fetchedPost = await axios.get("/api/post/" + route.params.id);
+  const fetchedPost = await Api.get("/post/" + route.params.id);
   post.value = fetchedPost.data;
-  const fetchedComments = await axios.get(
-    `/api/comment/post/${route.params.id}`
-  );
+  const fetchedComments = await Api.get(`/comment/post/${route.params.id}`);
   comments.value = fetchedComments.data;
 });
 
