@@ -133,9 +133,13 @@ import Vue3TagsInput from "vue3-tags-input";
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toast-notification";
+import { slugify } from "@formkit/utils";
 
 const router = useRouter();
 const toast = useToast();
+
+const slug = slugify("Testar en åäö");
+console.log(slug);
 
 const post = reactive({
   title: "",

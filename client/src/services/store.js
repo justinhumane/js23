@@ -5,6 +5,7 @@ const store = createStore({
   state: {
     user: null,
     userIsAdmin: false,
+    userIsApproved: false,
     userLoggedIn: false,
     isStoreUpdated: false,
   },
@@ -14,6 +15,9 @@ const store = createStore({
     },
     setUserIsAdmin(state, payload) {
       state.userIsAdmin = payload;
+    },
+    setUserIsApproved(state, payload) {
+      state.userIsApproved = payload;
     },
     setUserIsLoggedIn(state, payload) {
       state.userLoggedIn = payload;
@@ -32,10 +36,12 @@ const store = createStore({
       if (res && res.data) {
         context.commit("setUser", res.data.data);
         context.commit("setUserIsAdmin", res.data.data.level === 0);
+        context.commit("setUserIsApproved", res.data.data.level < 3);
         context.commit("setUserIsLoggedIn", true);
       } else {
         context.commit("setUser", null);
         context.commit("setUserIsAdmin", false);
+        context.commit("setUserIsApproved", false);
         context.commit("setUserIsLoggedIn", false);
         throw new Error("unknown error");
       }
@@ -45,10 +51,12 @@ const store = createStore({
         const res = await Api.get("/users");
         context.commit("setUser", res.data.data);
         context.commit("setUserIsAdmin", res.data.data.level === 0);
+        context.commit("setUserIsApproved", res.data.data.level < 3);
         context.commit("setUserIsLoggedIn", true);
       } catch (e) {
         context.commit("setUser", null);
         context.commit("setUserIsAdmin", false);
+        context.commit("setUserIsApproved", false);
         context.commit("setUserIsLoggedIn", false);
       } finally {
         context.commit("setIsStoreUpdated", true);
@@ -61,6 +69,7 @@ const store = createStore({
       if (res) {
         context.commit("setUser", null);
         context.commit("setUserIsAdmin", false);
+        context.commit("setUserIsApproved", false);
         context.commit("setUserIsLoggedIn", false);
       }
     },

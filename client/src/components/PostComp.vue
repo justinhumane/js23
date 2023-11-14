@@ -110,7 +110,7 @@ const route = useRoute();
 
 const user = store.state.user;
 
-defineProps({
+const props = defineProps({
   id: String,
   title: String,
   type: String,
@@ -123,6 +123,6 @@ defineProps({
 });
 
 const deletePost = () => {
-  Api.delete("/post/" + route.params.id);
+  Api.delete("/post/" + props.id);
 };
 </script>

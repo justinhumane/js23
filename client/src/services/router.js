@@ -22,6 +22,7 @@ const routes = [
       authRequired: true,
       authForbidden: false,
       requireAdmin: false,
+      requireApproved: true,
     },
   },
   {
@@ -33,6 +34,7 @@ const routes = [
       authRequired: true,
       authForbidden: false,
       requireAdmin: false,
+      requireApproved: true,
     },
   },
   {
@@ -44,6 +46,7 @@ const routes = [
       authRequired: true,
       authForbidden: false,
       requireAdmin: false,
+      requireApproved: true,
     },
   },
   {
@@ -55,6 +58,7 @@ const routes = [
       authRequired: true,
       authForbidden: false,
       requireAdmin: false,
+      requireApproved: true,
     },
   },
   {
@@ -66,6 +70,7 @@ const routes = [
       authRequired: true,
       authForbidden: false,
       requireAdmin: false,
+      requireApproved: true,
     },
     props: true,
   },
@@ -78,6 +83,7 @@ const routes = [
       authRequired: false,
       authForbidden: true,
       requireAdmin: false,
+      requireApproved: false,
     },
   },
   {
@@ -89,6 +95,7 @@ const routes = [
       authRequired: false,
       authForbidden: true,
       requireAdmin: false,
+      requireApproved: false,
     },
   },
   {
@@ -100,6 +107,7 @@ const routes = [
       authRequired: true,
       authForbidden: false,
       requireAdmin: false,
+      requireApproved: false,
     },
   },
   {
@@ -111,6 +119,7 @@ const routes = [
       authRequired: true,
       authForbidden: false,
       requireAdmin: true,
+      requireApproved: true,
     },
   },
   {
@@ -122,6 +131,7 @@ const routes = [
       authRequired: true,
       authForbidden: false,
       requireAdmin: true,
+      requireApproved: true,
     },
   },
   {
@@ -133,6 +143,7 @@ const routes = [
       authRequired: true,
       authForbidden: false,
       requireAdmin: false,
+      requireApproved: true,
     },
   },
 ];
@@ -152,12 +163,15 @@ router.beforeEach(async (to, from, next) => {
   // control routes
   const isAuthenticated = store.state.userLoggedIn;
   const isAdmin = store.state.userIsAdmin;
+  const isApproved = store.state.userIsApproved;
   if (!isAuthenticated && to.meta.authRequired) {
     next({ name: "login" });
   } else if (isAuthenticated && to.meta.authForbidden) {
     next({ name: "user" });
   } else if (!isAdmin && to.meta.requireAdmin) {
     next({ name: "home" });
+  } else if (!isApproved && to.meta.requireApproved) {
+    next({ name: "user" });
   } else {
     next();
   }

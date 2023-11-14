@@ -34,24 +34,35 @@ router.post("/register", (req, res) => {
  * @desc Login user
  * @access Public
  */
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  User.findOne({ email: email, password: password })
-    .then((user) => {
-      if (!user) {
-        return res
-          .status(401)
-          .json({ message: "failed", error: "wrong-credentials" });
-      }
-      const maxAge = 3 * 24 * 60 * 60;
-      const token = createJwt(user._id, maxAge);
-      console.log(token);
-      res.cookie("auth", token, { httpOnly: true, maxAge: maxAge * 10 });
-      return res.status(200).json({ message: "success", data: user });
-    })
-    .catch((err) => {
-      return res.status(400).json({ message: "failed", err });
-    });
+
+  try {
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res
+        .status(401)
+        .json({ message: "failed", error: "No user found" });
+    }
+
+    const isPasswordValid = await user.validatePassword(password);
+    if (!isPasswordValid) {
+      return res
+        .status(401)
+        .json({ message: "failed", error: "Invalid password" });
+    }
+
+    const maxAge = 3 * 24 * 60 * 60;
+    const token = createJwt(user._id, maxAge);
+    res.cookie("auth", token, { httpOnly: true, maxAge: maxAge * 10 });
+    return res
+      .status(200)
+      .json({ message: "success", data: "Login successful" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "failed", error: "Internal Server Error" });
+  }
 });
 
 /**
@@ -103,6 +114,37 @@ router.put("/edit/:id", async (req, res) => {
       lastName,
       email,
     });
+    if (!user) throw new Error("Something went wrong updating the user!");
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.put("/edit/:id/password", async (req, res) => {
+  const { oldPassword, newPassword, confirmationPassword } = req.body;
+  try {
+    const user = await User.findById(req.params.id);
+
+    user.validatePassword(oldPassword, (err, isMatch) => {
+      if (err) throw err;
+      if (!isMatch) {
+        return res
+          .status(401)
+          .json({ message: "failed", error: "wrong-credentials" });
+      }
+    });
+
+    if (newPassword !== confirmationPassword) {
+      return res.status(401).json({
+        message: "failed",
+        error: "New password and confirmation password isn't the same",
+      });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
     if (!user) throw new Error("Something went wrong updating the user!");
     res.status(200).json(user);
   } catch (error) {
