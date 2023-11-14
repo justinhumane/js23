@@ -32,7 +32,7 @@
 
 <script setup>
 import { ref, watch } from "vue";
-import axios from "axios";
+import Api from "../services/api";
 import NavigationComp from "../components/NavigationComp.vue";
 import PostComp from "../components/PostComp.vue";
 import PaginationComp from "../components/PaginationComp.vue";
@@ -56,7 +56,7 @@ const goToPreviousPage = () => {
 watch(
   currentPage,
   async (newPage, oldPage) => {
-    const response = await axios.get("/api/post?type=Klassrådsprotokoll");
+    const response = await Api.get("/post?type=Klassrådsprotokoll");
     posts.value = response.data;
   },
   { immediate: true }

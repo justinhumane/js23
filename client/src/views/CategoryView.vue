@@ -34,7 +34,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import axios from "axios";
+import Api from "../services/api";
 import NavigationComp from "../components/NavigationComp.vue";
 import PostComp from "../components/PostComp.vue";
 import PaginationComp from "../components/PaginationComp.vue";
@@ -61,7 +61,7 @@ const goToPreviousPage = () => {
 watch(
   currentPage,
   async (newPage, oldPage) => {
-    const response = await axios.get(`/api/post?category=${categorySlug}`);
+    const response = await Api.get(`/post?category=${categorySlug}`);
     posts.value = response.data;
   },
   { immediate: true }
