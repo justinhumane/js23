@@ -9,10 +9,12 @@
         :title="post.title"
         type="Lektion"
         :category="post.category"
+        :categorySlug="post.categorySlug"
         :tags="post.tags"
         :content="post.content"
         :links="post.links"
         :createdAt="post.createdAt"
+        :comments="post.comments"
       />
       <PaginationComp
         v-if="posts.max_posts < posts.post_count"

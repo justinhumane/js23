@@ -9,6 +9,7 @@
         :title="post.title"
         :type="post.postType"
         :category="post.category"
+        :categorySlug="post.categorySlug"
         :tags="post.tags"
         :content="post.content"
         :links="post.links"
@@ -43,7 +44,7 @@ const route = useRoute();
 
 const posts = ref([]);
 const currentPage = ref(1);
-const category = route.params.category;
+const categorySlug = route.params.slug;
 
 const goToPage = (page) => {
   currentPage.value = page;
@@ -60,7 +61,7 @@ const goToPreviousPage = () => {
 watch(
   currentPage,
   async (newPage, oldPage) => {
-    const response = await axios.get(`/api/post?category=${category}`);
+    const response = await axios.get(`/api/post?category=${categorySlug}`);
     posts.value = response.data;
   },
   { immediate: true }

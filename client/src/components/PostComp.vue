@@ -15,7 +15,7 @@
     >
       Kurs
       <router-link
-        :to="`/category/${category}`"
+        :to="`/category/${categorySlug}`"
         class="mx-2 px-2 py-1 font-semibold rounded text-sm transition duration-300 bg-amber-300 hover:bg-amber-400 dark:bg-sky-700 dark:hover:bg-sky-900"
         >{{ category }}</router-link
       >
@@ -67,14 +67,13 @@
           viewBox="0 0 512 512"
           class="ml-2"
         >
-          <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
           <path
             d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
           />
         </svg>
       </a>
     </div>
-    <div v-if="route.name == 'home'" class="font-mono text-sm mt-4">
+    <div v-if="route.name !== 'viewPost'" class="font-mono text-sm mt-4">
       <router-link :to="`/post/${id}`"
         >{{ comments.length }} kommentarer</router-link
       >
@@ -113,8 +112,10 @@ const user = store.state.user;
 const props = defineProps({
   id: String,
   title: String,
+  slug: String,
   type: String,
   category: String,
+  categorySlug: String,
   tags: Array,
   content: String,
   links: Array,

@@ -11,7 +11,7 @@ router.get("/post/:postId", async (req, res) => {
       .populate("parentComment")
       .populate({
         path: "children",
-        populate: { path: "user", select: "username" },
+        populate: { path: "user", select: "firstName lastName" },
       })
       .exec();
 

@@ -16,13 +16,6 @@
       >
         <FormKit
           type="text"
-          label="Användarnamn"
-          label-class="text-sm font-bold"
-          input-class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
-          v-model="user.username"
-        />
-        <FormKit
-          type="text"
           label="Förnamn"
           label-class="text-sm font-bold"
           input-class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
@@ -90,7 +83,6 @@ import Api from "../services/api";
 const store = useStore();
 
 const user = ref({
-  username: store.state.user.username,
   firstName: store.state.user.firstName,
   lastName: store.state.user.lastName,
   email: store.state.user.email,
@@ -104,7 +96,6 @@ const password = ref({
 
 const saveUser = async () => {
   await Api.put(`/users/edit/${store.state.user._id}`, {
-    username: user.value.username,
     firstName: user.value.firstName,
     lastName: user.value.lastName,
     email: user.value.email,

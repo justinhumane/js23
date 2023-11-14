@@ -9,6 +9,7 @@
         :title="post.title"
         :type="post.postType"
         :category="post.category"
+        :categorySlug="post.categorySlug"
         :tags="post.tags"
         :content="post.content"
         :links="post.links"

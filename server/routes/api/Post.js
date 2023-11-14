@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
       query.postType = req.query.type;
     }
     if (req.query.category) {
-      query.category = req.query.category;
+      query.categorySlug = req.query.category;
     }
     if (req.query.tag) {
       query.tags = req.query.tag;
@@ -41,8 +41,8 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
-  const postId = req.params.id;
+router.get("/:slug", async (req, res) => {
+  const postId = req.params.slug;
 
   try {
     const post = await Post.findById(postId);
@@ -54,12 +54,23 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/new/", async (req, res) => {
-  const { title, postType, content, category, tags, links } = req.body;
-  const newPost = new Post({
+  const {
     title,
+    slug,
     postType,
     content,
     category,
+    categorySlug,
+    tags,
+    links,
+  } = req.body;
+  const newPost = new Post({
+    title,
+    slug,
+    postType,
+    content,
+    category,
+    categorySlug,
     tags,
     links,
   });

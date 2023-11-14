@@ -11,6 +11,7 @@ import ProtocolView from "../views/ProtocolView.vue";
 import PostView from "../views/PostView.vue";
 import CategoryView from "../views/CategoryView.vue";
 import TagView from "../views/TagView.vue";
+import HandleUsersView from "../views/HandleUsersView.vue";
 
 const routes = [
   {
@@ -50,7 +51,7 @@ const routes = [
     },
   },
   {
-    path: "/category/:category",
+    path: "/category/:slug",
     name: "category",
     component: CategoryView,
     meta: {
@@ -108,6 +109,18 @@ const routes = [
       authForbidden: false,
       requireAdmin: false,
       requireApproved: false,
+    },
+  },
+  {
+    path: "/users/approve",
+    name: "approveUsers",
+    component: HandleUsersView,
+    meta: {
+      title: "Godkänn användare",
+      authRequired: true,
+      authForbidden: false,
+      requireAdmin: true,
+      requireApproved: true,
     },
   },
   {

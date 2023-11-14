@@ -176,9 +176,11 @@ const save = async () => {
   try {
     await Api.post("/post/new", {
       title: post.title,
+      slug: slugify(post.title),
       postType: post.postType,
       content: post.content,
       category: post.category,
+      categorySlug: slugify(post.category),
       tags: post.tags,
       links: post.links,
     });

@@ -6,8 +6,10 @@
         :key="post._id"
         :id="post._id"
         :title="post.title"
+        :slug="post.slug"
         :type="post.postType"
         :category="post.category"
+        :categorySlug="categorySlug"
         :tags="post.tags"
         :content="post.content"
         :links="post.links"
@@ -43,7 +45,7 @@
 
 <script setup>
 import Api from "../services/api";
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive, watch } from "vue";
 import axios from "axios";
 import { useRoute, useRouter } from "vue-router";
 import NavigationComp from "../components/NavigationComp.vue";
@@ -59,10 +61,12 @@ const user = store.state.user;
 
 const post = ref({
   _id: "",
+  slug: "",
   title: "",
   postType: "",
   content: "",
   category: "",
+  categorySlug: "",
   tags: [],
   links: [],
   newTags: [],

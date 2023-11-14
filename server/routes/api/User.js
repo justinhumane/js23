@@ -18,8 +18,8 @@ const createJwt = (payload) => {
  * @access Private
  */
 router.post("/register", (req, res) => {
-  const { username, firstName, lastName, email, password } = req.body;
-  User.create({ username, firstName, lastName, email, password })
+  const { firstName, lastName, email, password } = req.body;
+  User.create({ firstName, lastName, email, password })
     .then(() => {
       return res.status(200).json({ message: "success" });
     })
@@ -84,7 +84,6 @@ router.get("/", requireLogin, (req, res) => {
   User.findOne(
     { _id },
     {
-      username: 1,
       firstName: 1,
       lastName: 1,
       email: 1,
@@ -104,10 +103,9 @@ router.get("/", requireLogin, (req, res) => {
 });
 
 router.put("/edit/:id", async (req, res) => {
-  const { username, firstName, lastName, email } = req.body;
+  const { firstName, lastName, email } = req.body;
   try {
     const user = await User.findByIdAndUpdate(req.params.id, {
-      username,
       firstName,
       lastName,
       email,
@@ -144,6 +142,31 @@ router.put("/edit/:id/password", async (req, res) => {
     await user.save();
 
     if (!user) throw new Error("Something went wrong updating the user!");
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.get("/unapproved", async (req, res) => {
+  try {
+    const users = await User.find({ level: { $gt: 2 } });
+
+    if (!users) throw new Error("No users found");
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.put("/approve/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const user = await User.findByIdAndUpdate(id, { level: 2 });
+    if (!user) {
+      return res.status(404).json({ message: "No user found" });
+    }
+
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -11,14 +11,6 @@
     >
       <FormKit
         type="text"
-        label="Användarnamn"
-        placeholder="anderssvensson"
-        label-class="text-sm font-bold"
-        input-class="p-2 rounded mb-4 bg-slate-300 dark:bg-slate-500"
-        v-model="credentials.username"
-      />
-      <FormKit
-        type="text"
         label="Förnamn"
         placeholder="Anders"
         label-class="text-sm font-bold"
@@ -63,14 +55,14 @@ const router = useRouter();
 const toast = useToast();
 
 const credentials = reactive({
-  username: "",
   email: "",
+  firstName: "",
+  lastName: "",
   password: "",
 });
 
 const register = () => {
   Api.post("/users/register", {
-    username: credentials.username,
     firstName: credentials.firstName,
     lastName: credentials.lastName,
     email: credentials.email,
