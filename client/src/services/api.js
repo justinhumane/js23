@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let baseUrl = "https://js23api.justinhumane.com";
+let baseUrl = "https://js23api.justinhumane.com/api";
 
 const api = axios.create({
   baseURL: baseUrl,
